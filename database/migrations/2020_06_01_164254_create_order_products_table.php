@@ -13,10 +13,12 @@ class CreateOrderProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('order_products', function (Blueprint $table) {
+        Schema::create('order_product', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('quantity');
+            $table->float('price');
 
 
             $table->foreign('order_id')
@@ -36,14 +38,14 @@ class CreateOrderProductsTable extends Migration
      */
     public function down()
     {
-        Schema::table('order_products', function (Blueprint $table) {
-            if (Schema::hasColumn('order_products', 'product_id')){
+        Schema::table('order_product', function (Blueprint $table) {
+            if (Schema::hasColumn('order_product', 'product_id')){
                 $table->dropForeign(['product_id']);
             }
-            if (Schema::hasColumn('order_products', 'order_id')){
+            if (Schema::hasColumn('order_product', 'order_id')){
                 $table->dropForeign(['order_id']);
             }
         });
-        Schema::dropIfExists('order_products');
+        Schema::dropIfExists('order_product');
     }
 }

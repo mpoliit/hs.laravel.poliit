@@ -13,8 +13,9 @@ class CreateOrdersStatusesTable extends Migration
      */
     public function up()
     {
-        Schema::create('orders_statuses', function (Blueprint $table) {
+        Schema::create('order_status', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('name')->unique();
             $table->string('type')->unique();
         });
     }
@@ -26,6 +27,6 @@ class CreateOrdersStatusesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('orders_statuses');
+        Schema::dropIfExists('order_status');
     }
 }

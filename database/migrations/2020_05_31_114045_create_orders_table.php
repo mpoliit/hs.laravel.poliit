@@ -25,7 +25,6 @@ class CreateOrdersTable extends Migration
             $table->string('address');
             $table->float('total');
             $table->unsignedBigInteger('status_id');
-            $table->string('type')->unique();
             $table->timestamps();
 
             $table->foreign('user_id')
@@ -34,7 +33,7 @@ class CreateOrdersTable extends Migration
 
             $table->foreign('status_id')
                 ->references('id')
-                ->on('orders_statuses');
+                ->on('order_status');
         });
     }
 
