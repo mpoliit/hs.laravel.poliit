@@ -14,7 +14,8 @@ class Product extends Model
         'short_description',
         'price',
         'discount',
-        'quantity'
+        'quantity',
+        'thumbnail'
     ];
 
     public function categories()
@@ -25,11 +26,6 @@ class Product extends Model
     public function orders()
     {
         return $this->belongsToMany(\App\Models\Order::class)->withPivot('quantity', 'price');
-    }
-
-    public function trumbnail()
-    {
-        return $this->morphOne(\App\Models\Image::class, 'imageable');
     }
 
     public function image()

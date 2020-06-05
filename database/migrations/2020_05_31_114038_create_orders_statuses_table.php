@@ -17,6 +17,7 @@ class CreateOrdersStatusesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->unique();
             $table->string('type')->unique();
+            $table->timestamps();
         });
     }
 
