@@ -17,4 +17,11 @@ class Category extends Model
     {
         return $this->morphOne(\App\Models\Image::class, 'imageable');
     }
+
+    public function getShortDescriptionAttribute()
+    {
+        $more = strlen($this->description) > 55 ? '....' : '';
+
+        return substr($this->description, 0, 55) . $more;
+    }
 }

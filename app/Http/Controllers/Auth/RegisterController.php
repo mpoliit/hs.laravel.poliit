@@ -29,7 +29,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = 'admin/dashboard';
 
     /**
      * Create a new controller instance.
@@ -49,11 +49,13 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        dd($data);
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'name'          => ['required', 'string', 'max:255'],
+            'surname'       => ['required', 'string', 'max:255'],
+            'email'         => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'phone'         => ['required', 'string', 'max:15', 'unique:users'],
+            'password'      => ['required', 'string', 'min:8', 'confirmed'],
+            'birth_date'    => ['required', 'date']
         ]);
     }
 
@@ -65,12 +67,13 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        dd($data);
+        if(isset($data['_token'])){
+            unset($data['_token']);
+        }
 
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        $data['role_id'] = \App\Models\Role::where('name', '=', config('roles.customer'))->first()->id;
+
+
+        return User::create($data);
     }
 }

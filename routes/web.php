@@ -12,9 +12,13 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('layouts.app');
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::middleware(['auth', 'admin'])->prefix('admin')->namespace('Admin')->name('admin.')->group(function (){
+    Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+
+    Route::resource('categories', 'CategoriesController')->except(['show']);
+});
