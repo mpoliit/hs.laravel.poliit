@@ -10,6 +10,7 @@
                         <th scope="col">{{__('Id')}}</th>
                         <th scope="col">{{__('Title')}}</th>
                         <th scope="col">{{__('Description')}}</th>
+                        <th scope="col">{{__('Products')}}</th>
                         <th scope="col" class="text-center">{{__('Action')}}</th>
                     </tr>
                     </thead>

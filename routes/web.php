@@ -17,8 +17,14 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::prefix('ajax')->name('ajax.')->namespace('Ajax')->group(function (){
+    Route::delete('images/{image}/remove', 'ImageController@remove')->name('image.remove');
+});
+
 Route::middleware(['auth', 'admin'])->prefix('admin')->namespace('Admin')->name('admin.')->group(function (){
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
     Route::resource('categories', 'CategoriesController')->except(['show']);
+    Route::resource('products', 'ProductsController')->except(['show']);
+    Route::resource('orders', 'OrdersController')->except(['show']);
 });

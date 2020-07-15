@@ -19,7 +19,7 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $categories = Category::paginate(5);
+        $categories = Category::withCount('products')->paginate(5);
 
         return view('admin.categories.index', compact('categories'));
     }
@@ -49,8 +49,8 @@ class CategoriesController extends Controller
         ]);
 
         if(!empty($request->file('image'))){
-            $imageService = app()->make(ImageServicesInterface::class);
-            $filePath = $imageService->upload($request->file('image'));
+            $imageService   = app()->make(ImageServicesInterface::class);
+            $filePath       = $imageService->upload($request->file('image'));
             $newCategory->image()->create(['path' => $filePath]);
         }
 
@@ -65,7 +65,12 @@ class CategoriesController extends Controller
      */
     public function edit(Category $category)
     {
-        return view('admin.categories.edit', compact('category'));
+        $image = array();
+        if($category->image()->exists()){
+            $image = str_replace('public/', '', $category->image()->first()->toArray());
+        }
+
+        return view('admin.categories.edit', compact('category', 'image'));
     }
 
     /**
@@ -82,6 +87,22 @@ class CategoriesController extends Controller
             'description'   => $request->get('description')
         ]);
 
+        if(!empty($request->file('image'))){
+            $imageService   = app()->make(ImageServicesInterface::class);
+            $filePath       = $imageService->upload($request->file('image'));
+
+            $oldImage       = $category->image()->first();
+            if(!is_null($oldImage)){
+                $imageService->remove($oldImage->path);
+            }
+
+            if(is_null($oldImage)){
+                $category->image()->create(['path' => $filePath]);
+            } else {
+                $category->image()->update(['path' => $filePath]);
+            }
+        }
+
         return redirect(route('admin.categories.index'))->with(['status' => 'The category was successfuly update!']);
     }
 
@@ -94,6 +115,7 @@ class CategoriesController extends Controller
     public function destroy( Category $category)
     {
         $category->delete();
+        $category->image()->delete();
 
         return redirect(route('admin.categories.index'))->with(['status' => 'The category was successfuly delete!']);
     }

@@ -8,7 +8,7 @@
                     <div class="card-header">Create Category</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('admin.categories.store') }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('admin.products.store') }}" enctype="multipart/form-data">
                             @csrf
 
                             <div class="form-group row">
@@ -66,7 +66,6 @@
                                     @enderror
                                 </div>
                             </div>
-                    </div>
 
                             <div class="form-group row mb-0">
                                 <div class="col-md-8 offset-md-4">

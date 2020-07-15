@@ -7,11 +7,12 @@ use Faker\Generator as Faker;
 
 $factory->define(Product::class, function (Faker $faker) {
     return [
+        'category_id'       => \App\Models\Category::get()->random()->id,
         'SKU'               => $faker->unique()->randomNumber(5),
         'name'              => $faker->unique()->sentence(rand(1, 5)),
         'description'       => $faker->sentences(rand(5, 10), true),
         'short_description' => $faker->text(200),
-        'thumbnail'         => 'public/images/' . $faker->file(
+        'thumbnail'         => 'images/' . $faker->file(
             Storage::disk('local')->path('public/seed-images'),
             Storage::disk('local')->path('public/images'),
             false

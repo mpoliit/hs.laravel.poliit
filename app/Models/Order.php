@@ -16,12 +16,12 @@ class Order extends Model
         'city',
         'address',
         'total',
-        'type'
+        'status_id'
     ];
 
     public function status()
     {
-        $this->belongsTo(\App\Models\OrderStatus::class);
+        return $this->belongsTo(\App\Models\OrderStatus::class);
     }
 
     public function user()
@@ -31,6 +31,6 @@ class Order extends Model
 
     public function products()
     {
-        return $this->hasMany(\App\Models\Product::class);
+        return $this->belongsToMany(\App\Models\Product::class,'order_products');
     }
 }

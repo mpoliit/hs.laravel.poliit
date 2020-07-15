@@ -8,6 +8,7 @@ class Product extends Model
 {
     protected $fillable = [
         'id',
+        'category_id',
         'SKU',
         'name',
         'description',
@@ -18,14 +19,15 @@ class Product extends Model
         'thumbnail'
     ];
 
-    public function categories()
+    public function category()
     {
-        return $this->belongsToMany(\App\Models\Category::class);
+        return $this->belongsTo(\App\Models\Category::class);
     }
 
     public function orders()
     {
-        return $this->belongsToMany(\App\Models\Order::class)->withPivot('quantity', 'price');
+        return $this->belongsToMany(\App\Models\Order::class, 'order_products','order_id','product_id')
+            ->withPivot('quantity','price');
     }
 
     public function image()

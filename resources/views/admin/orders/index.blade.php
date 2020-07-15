@@ -7,20 +7,19 @@
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th scope="col">{{__('SKU')}}</th>
-                        <th scope="col">{{__('Thumbnail')}}</th>
-                        <th scope="col">{{__('Name')}}</th>
-                        <th scope="col">{{__('Category')}}</th>
-                        <th scope="col">{{__('Small Description')}}</th>
+                        <th scope="col">{{__('Id')}}</th>
+                        <th scope="col">{{__('User Name')}}</th>
+                        <th scope="col">{{__('User email')}}</th>
+                        <th scope="col">{{__('Total')}}</th>
                         <th scope="col" class="text-center">{{__('Action')}}</th>
                     </tr>
                     </thead>
                     <tbody>
-                        @each('admin.products.parts.product_row', $products, 'products')
+                        @each('admin.orders.parts.orders_row', $orders, 'order')
                     </tbody>
                 </table>
 
-                {{ $products->links() }}
+                {{ $orders->links() }}
             </div>
         </div>
     </div>
