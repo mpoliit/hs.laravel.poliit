@@ -2,10 +2,14 @@
 
 namespace App\Models;
 
+use Gloudemans\Shoppingcart\CanBeBought;
+use Gloudemans\Shoppingcart\Contracts\Buyable;
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class Product extends Model implements Buyable
 {
+    use CanBeBought;
+
     protected $fillable = [
         'id',
         'category_id',

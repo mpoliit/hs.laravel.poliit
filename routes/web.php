@@ -40,3 +40,9 @@ Route::middleware(['auth'])->group(function (){
     Route::post('account/update','AccountController@update')->name('account.update');
 
 });
+
+Route::get('checkout','CheckoutController')->name('checkout');
+Route::post('orders/create','OrdersController')->name('orders.create');
+Route::get('thankyou/{order}', function ($order){
+    return view('checkout/thankyou', compact('order'));
+})->name('thankyou');
