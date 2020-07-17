@@ -74,4 +74,9 @@ class Product extends Model implements Buyable
             'user_id'
         );
     }
+
+    public function comments()
+    {
+        return $this->morphMany(\App\Models\Comment::class, 'commentable');
+    }
 }

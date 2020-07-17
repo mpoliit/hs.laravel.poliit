@@ -23,6 +23,10 @@
 
                             @include('categories.parts.products_show',['category'=>$category,'products' => $products])
                         </div>
+                        <div class="row">
+
+                            @include('categories.parts.category_description',['add_comment.blade.php '=>$category,'products' => $products])
+                        </div>
                     </div>
                 </div>
             </div>

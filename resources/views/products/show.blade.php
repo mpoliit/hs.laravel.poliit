@@ -118,6 +118,9 @@
                 <h4>Description:</h4>
                 <p>{{$product->description}}</p>
             </div>
+
+            @include('comments.index',['comments'=>$comments,'product'=>$product])
+
         </div>
     </div>
     <script>

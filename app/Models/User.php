@@ -98,4 +98,9 @@ class User extends Authenticatable
     {
         $this->wishes()->detach($product);
     }
+
+    public function comments()
+    {
+        return $this->hasMany(\App\Models\Comment::class);
+    }
 }

@@ -12,7 +12,7 @@ class ProductObserver
      */
     public function created(Product $product)
     {
-        //
+
     }
 
     /**

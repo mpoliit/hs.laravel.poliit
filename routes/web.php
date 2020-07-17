@@ -40,6 +40,7 @@ Route::middleware(['auth'])->group(function (){
     Route::post('account/update','AccountController@update')->name('account.update');
 
     Route::post('rating/{product}/add','RatingController@add')->name('rating.add');
+    Route::post('comments/{product}/add','CommentsController@add')->name('comments.add');
 
     //wishlist
     Route::get('wishlist/{product}/add','WishListController@add')->name('wishlist.add');
