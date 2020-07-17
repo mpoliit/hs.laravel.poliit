@@ -54,6 +54,45 @@
                             </form>
                         </div>
                     @endif
+                        <form class="form-horizontal postptars" action="{{route('rating.add', $product)}}" id="addStar" method="POST">
+                            @csrf
+                            <div class="form-group required">
+                                <div class="col-sm-12">
+                                    @if($product->getUserProductRating() )
+                                        @for($i = 5; $i >= 1;$i--)
+                                            <input type="radio"
+                                                   class="star star-{{$i}}"
+                                                   value="{{$i}}"
+                                                   id="star-{{$i}}"
+                                                   name="star"
+                                                   @if($i == $product->getUserProductRating()) checked="checked" @endif
+
+
+                                            >
+                                            <label for="star-{{$i}}" class="star star-{{$i}}"></label>
+                                        @endfor
+                                    @else
+                                        <input type="radio" class="star star-5" value="5" id="star-5" name="star">
+                                        <label for="star-5" class="star star-5"></label>
+                                        <input type="radio" class="star star-4" value="4" id="star-4" name="star">
+                                        <label for="star-4" class="star star-4"></label>
+                                        <input type="radio" class="star star-3" value="3" id="star-3" name="star">
+                                        <label for="star-3" class="star star-3"></label>
+                                        <input type="radio" class="star star-2" value="2" id="star-2" name="star">
+                                        <label for="star-2" class="star star-2"></label>
+                                        <input type="radio" class="star star-1" value="1" id="star-1" name="star">
+                                        <label for="star-1" class="star star-1"></label>
+
+
+
+
+                                    @endif
+
+                                </div>
+
+                            </div>
+
+                        </form>
                         <hr>
 
 
