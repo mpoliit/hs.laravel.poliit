@@ -8,6 +8,17 @@
                     <div class="card-header">Create Category</div>
 
                     <div class="card-body">
+
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
                         <form method="POST" action="{{ route('admin.products.update', $product) }}" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
@@ -23,12 +34,6 @@
                                            value="{{ $product->SKU ?? '' }}"
                                            required
                                            autofocus>
-
-                                    @error('SKU')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
                                 </div>
                             </div>
 
@@ -42,12 +47,6 @@
                                            name="name"
                                            value="{{ $product->name ?? '' }}"
                                            required>
-
-                                    @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
                                 </div>
                             </div>
 
@@ -60,12 +59,6 @@
                                             <option value="{{ $category['id'] }}" @if($category['id'] === $product->category_id) selected="selected" @endif>{{ $category['title'] }}</option>
                                         @endforeach
                                     </select>
-
-                                    @error('category_id')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
                                 </div>
                             </div>
 
@@ -75,20 +68,13 @@
                                         <img src="{{ Storage::disk('public')->url($product->thumbnail) }}" height="250" width="250" />
                                     @endif
                                 </div>
-                                <label for="thumbnail" class="col-md-4 col-form-label text-md-right">{{ __('Image') }}</label>
+                                <label for="thumbnail" class="col-md-4 col-form-label text-md-right">{{ __('Thumbnail') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="thumbnail"
                                            type="file"
-                                           class="form-control @error('thumbnail') is-invalid @enderror"
-                                           name="thumbnail"
-                                           value="{{ old('thumbnail') }}">
-
-                                    @error('thumbnail')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+                                           class="form-control"
+                                           name="thumbnail">
                                 </div>
                             </div>
 
@@ -102,11 +88,6 @@
                                               rows="10"
                                               class="form-control"
                                     >{{$product->description ?? ''}}</textarea>
-                                    @error('description')
-                                    <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
                                 </div>
                             </div>
 
@@ -121,11 +102,6 @@
                                               maxlength="200"
                                               class="form-control @error('short_description') is-invalid @enderror"
                                     >{{$product->short_description ?? ''}}</textarea>
-                                    @error('short_description')
-                                    <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
                                 </div>
                             </div>
 
@@ -139,12 +115,6 @@
                                            name="price"
                                            value="{{ $product->price ?? '' }}"
                                            required>
-
-                                    @error('price')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
                                 </div>
                             </div>
 
@@ -160,12 +130,6 @@
                                            min="0"
                                            max="100"
                                            required>
-
-                                    @error('discount')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
                                 </div>
                             </div>
 
@@ -180,12 +144,6 @@
                                            value="{{ $product->quantity ?? 0 }}"
                                            min="0"
                                            required>
-
-                                    @error('quantity')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
                                 </div>
                             </div>
 

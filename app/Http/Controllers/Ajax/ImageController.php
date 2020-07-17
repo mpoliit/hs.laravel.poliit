@@ -10,6 +10,6 @@ class ImageController extends Controller
 {
     public function remove(Image $image){
         $image->delete();
-        return response()->json(['success'=>true, 'message'=>'Image deleted successfully.']);
+        return response()->json(['success' => true, 'message'=>'Image deleted successfully.']);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Models\Category;
 use App\Models\Product;
 use App\Services\Contract\ImageServicesInterface;
@@ -84,8 +85,7 @@ class ProductsController extends Controller
     public function edit(Product $product)
     {
         $categories = Category::all()->toArray();
-        $images = $product->image;
-        return view('admin.products.edit', compact('categories', 'product'));
+        return view('admin/products/edit', compact('categories', 'product'));
     }
 
     /**
@@ -95,9 +95,45 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateProductRequest $request, Product $product)
     {
-        //
+
+        $product->update([
+            'SKU' => $request->get('SKU'),
+            'name' => $request->get('name'),
+            'small_description' => $request->get('small_description'),
+            'price' => $request->get('price')
+        ]);
+
+        if (!empty($request->file('thumbnail'))){
+            $imageService = app()->make(\App\Services\Contract\ImageServicesInterface::class);
+            $filePath = $imageService->upload($request->file('thumbnail'));
+            $oldImage = $product->image()->first();
+
+            if(!is_null($oldImage)){
+                $imageService->remove($oldImage->path);
+            }
+
+            if (is_null($oldImage)){
+                $product->image()
+                    ->create([
+                        'path' => $filePath
+                    ]);
+
+            }else{
+                $product->image()
+                    ->update([
+                        'path' => $filePath
+                    ]);
+            }
+
+
+        }
+
+
+        return redirect(route('admin.products.index'))
+            ->with(['status' => 'The product was successfully updated!']);
+
     }
 
     /**
@@ -106,8 +142,11 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Product $product)
     {
-        //
+        $product->delete();
+
+        return  redirect(route('admin.products.index'))
+            ->with(['status' => 'This product was successfully removed!']);
     }
 }

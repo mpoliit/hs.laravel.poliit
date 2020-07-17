@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('layouts.app');
-});
+Route::get('/', 'HomeController');
 
 Auth::routes();
 
@@ -27,4 +25,18 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->namespace('Admin')->name(
     Route::resource('categories', 'CategoriesController')->except(['show']);
     Route::resource('products', 'ProductsController')->except(['show']);
     Route::resource('orders', 'OrdersController')->except(['show']);
+});
+Route::resource('categories','CategoriesController');
+
+Route::resource('products', 'ProductsController');
+
+Route::middleware(['auth'])->group(function (){
+    Route::get('cart','CartController@index')->name('cart.index');
+    Route::post('cart/{product}/add','CartController@add')->name('cart.add');
+    Route::post('cart/{product}/count/update','CartController@update')->name('cart.count.update');
+    Route::delete('cart/{product}/delete','CartController@delete')->name('cart.delete');
+
+    Route::get('account/index', 'AccountController@index')->name('account.index');
+    Route::post('account/update','AccountController@update')->name('account.update');
+
 });

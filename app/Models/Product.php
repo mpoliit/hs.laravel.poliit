@@ -34,4 +34,19 @@ class Product extends Model
     {
         return $this->morphMany(\App\Models\Image::class, 'imageable');
     }
+
+    public function printPrice():string
+    {
+        return  $this->getPrice() . __('$');
+    }
+
+    public function getPrice():string
+    {
+        $price = $this->price;
+
+        if($this->discount >0){
+            $price -= ($price /100 * $this->discount);
+        }
+        return round($price, 2);
+    }
 }

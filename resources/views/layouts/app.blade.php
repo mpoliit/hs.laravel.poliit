@@ -50,6 +50,12 @@
                                 </li>
                             @endif
                         @else
+                            <li class="nav-item">
+                                <a class="nav-link btn btn-success" href="{{ route('cart.index') }}">
+                                    {{ __('Cart') }}
+                                    <span style="margin-left: 6px;" class="badge badge-light">{{Cart::instance('cart')->content()->count()}}</span>
+                                </a>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -61,6 +67,9 @@
                                         {{ __('Dashboard') }}
                                         </a>
                                     @endif
+                                    <a class="dropdown-item" href="{{ route('account.index') }}">
+                                        {{ __('User Account') }}
+                                    </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

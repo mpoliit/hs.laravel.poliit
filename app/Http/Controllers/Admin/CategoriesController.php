@@ -117,6 +117,8 @@ class CategoriesController extends Controller
         $category->delete();
         $category->image()->delete();
 
-        return redirect(route('admin.categories.index'))->with(['status' => 'The category was successfuly delete!']);
+
+        return  redirect(route('admin.categories.index'))
+            ->with(['status' => 'The category was successfully removed!']);
     }
 }
