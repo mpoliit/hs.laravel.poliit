@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title')</title>
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -16,17 +16,19 @@
         integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
         crossorigin="anonymous"></script>
 
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @stack('header-style')
 </head>
 <body>
-    <div id="app">
-        @section('navbar')
-            <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+<div id="app">
+    @section('navbar')
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -67,12 +69,15 @@
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     @if(auth()->user()->isAdmin)
-                                        <a class="dropdown-item" href="{{ route('admin.dashboard')}}">
-                                        {{ __('Dashboard') }}
+                                        <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
+                                            {{ __('Dashboard') }}
                                         </a>
                                     @endif
                                     <a class="dropdown-item" href="{{ route('account.index') }}">
                                         {{ __('User Account') }}
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('wishlist.user') }}">
+                                        {{ __('Wish List') }}
                                     </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
@@ -90,23 +95,20 @@
                 </div>
             </div>
         </nav>
-        @show
-
-        @if (session('status'))
-            <div class="alert alert-success">
-                {{ session('status') }}
-            </div>
-        @endif
-        @if (session('customError'))
-            <div class="alert alert-warning">
-                {{ session('customError') }}
-            </div>
-        @endif
-
-
-        <main class="py-4">
-            @yield('content')
-        </main>
-    </div>
+    @show
+    @if(session('status'))
+        <div class="alert alert-success">
+            {{session('status')}}
+        </div>
+    @endif
+    @if(session('customError'))
+        <div class="alert alert-warning">
+            {{session('customError')}}
+        </div>
+    @endif
+    <main class="py-4">
+        @yield('content')
+    </main>
+</div>
 </body>
 </html>

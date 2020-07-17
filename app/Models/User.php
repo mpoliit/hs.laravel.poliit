@@ -68,4 +68,34 @@ class User extends Authenticatable
     public function getIsAdminAttribute(){
         return $this->role->name === config('roles.admin');
     }
+
+    public function instanceCartName()
+    {
+        $userName=[
+            $this->id,
+            $this->name,
+            $this->surname
+        ];
+        return implode('_', $userName);
+    }
+
+    public function wishes()
+    {
+        return $this->belongsToMany(
+            Product::class,
+            'wishlist',
+            'user_id',
+            'product_id'
+        );
+    }
+
+    public function addToWish(Product $product)
+    {
+        $this->wishes()->attach($product);
+    }
+
+    public function removeFromWish(Product $product)
+    {
+        $this->wishes()->detach($product);
+    }
 }

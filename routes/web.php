@@ -42,9 +42,9 @@ Route::middleware(['auth'])->group(function (){
     Route::post('rating/{product}/add','RatingController@add')->name('rating.add');
 
     //wishlist
-//    Route::get('wishlist/{product}/add','WishListController@add')->name('wishlist.add');
-//    Route::delete('wishlist/{product}/delete','WishListController@delete')->name('wishlist.delete');
-//    Route::get('account/wishlist','WishListController@userList')->name('wishlist.user');
+    Route::get('wishlist/{product}/add','WishListController@add')->name('wishlist.add');
+    Route::delete('wishlist/{product}/delete','WishListController@delete')->name('wishlist.delete');
+    Route::get('account/wishlist','WishListController@userList')->name('wishlist.user');
 
 });
 

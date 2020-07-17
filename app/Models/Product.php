@@ -64,4 +64,14 @@ class Product extends Model implements Buyable
         ])->first();
         return !is_null($vote) ? $vote->rating : false;
     }
+
+    public function followers()
+    {
+        return $this->belongsToMany(
+            User::class,
+            'wishlist',
+            'product_id',
+            'user_id'
+        );
+    }
 }
